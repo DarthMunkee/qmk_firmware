@@ -110,7 +110,14 @@ def info_json(keyboard):
 def _extract_features(info_data, rules):
     """Find all the features enabled in rules.mk.
     """
-    # Process booleans rules
+    # Special handling for bootmagic which also supports a "lite" mode.
+    if rules.get('BOOTMAGIC_ENABLE') == 'lite':
+        rules['BOOTMAGIC_LITE_ENABLE'] = 'on'
+        del rules['BOOTMAGIC_ENABLE']
+    if rules.get('BOOTMAGIC_ENABLE') == 'full':
+        rules['BOOTMAGIC_ENABLE'] = 'on'
+
+    # Process the rest of the rules as booleans
     for key, value in rules.items():
         if key.endswith('_ENABLE'):
             key = '_'.join(key.split('_')[:-1]).lower()

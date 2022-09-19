@@ -14,6 +14,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "ffkb_byomcu.h"
+
+#ifndef GLIDEPOINT_DPI_OPTIONS
+#    define GLIDEPOINT_DPI_OPTIONS \
+        { 400, 800, 1200, 1600, 2000, 2400, 2800, 3200, 3600, 4000 }
+#    ifndef GLIDEPOINT_DPI_DEFAULT
+#        define GLIDEPOINT_DPI_DEFAULT 1
+#    endif
+#endif
+#ifndef GLIDEPOINT_DPI_DEFAULT
+#    define GLIDEPOINT_DPI_DEFAULT 1
+#endif
+
+keyboard_config_t keyboard_config;
+uint16_t          dpi_array[] = GLIDEPOINT_DPI_OPTIONS;
+#define DPI_OPTION_SIZE (sizeof(dpi_array) / sizeof(uint16_t))
+
 #ifdef RGB_MATRIX_ENABLE
 
 // 6 column config
@@ -60,4 +76,63 @@ led_config_t g_led_config = { {
 */
 
 #endif
+
+bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
+    switch(keycode) {
+        case DPI_UP:
+            if (record->event.pressed) {
+                keyboard_config.dpi_config = (keyboard_config.dpi_config + 1) % DPI_OPTION_SIZE;
+                eeconfig_update_kb(keyboard_config.raw);
+                pointing_device_set_cpi(dpi_array[keyboard_config.dpi_config]);
+            }
+            return false;
+        case DPI_DN:
+            if (record->event.pressed) {
+                if (keyboard_config.dpi_config > 0) {
+                    keyboard_config.dpi_config = (keyboard_config.dpi_config - 1) % DPI_OPTION_SIZE;
+                } else {
+                    keyboard_config.dpi_config = DPI_OPTION_SIZE - 1;
+                }
+                eeconfig_update_kb(keyboard_config.raw);
+                pointing_device_set_cpi(dpi_array[keyboard_config.dpi_config]);
+            }
+            return false;
+        case DPI_FINE:
+            if (record->event.pressed) {
+                pointing_device_set_cpi(dpi_array[0]);
+            } else {
+                pointing_device_set_cpi(dpi_array[keyboard_config.dpi_config]);
+            }
+            return false;
+    }
+    return process_record_user(keycode, record);
+}
+
+void pointing_device_init_kb(void) {
+    pointing_device_set_cpi(dpi_array[keyboard_config.dpi_config]);
+}
+
+void eeconfig_init_kb(void) {
+    keyboard_config.dpi_config = GLIDEPOINT_DPI_DEFAULT;
+    eeconfig_update_kb(keyboard_config.raw);
+
+    eeconfig_init_user();
+}
+
+void matrix_init_kb(void) {
+    // is safe to just read DPI setting since matrix init
+    // comes before pointing device init.
+    keyboard_config.raw = eeconfig_read_kb();
+    if (keyboard_config.dpi_config > DPI_OPTION_SIZE) {
+        eeconfig_init_kb();
+    }
+    matrix_init_user();
+}
+
+/*void keyboard_post_init_kb(void) {
+    pointing_device_set_cpi(dpi_array[keyboard_config.dpi_config]);
+    keyboard_post_init_user();
+    rgblight_toggle_noeeprom();     //double toggle post init removes the weirdness with rgb strips having a yellow first LED
+    rgblight_toggle_noeeprom();
+*/
 
