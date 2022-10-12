@@ -17,6 +17,11 @@
 
 #include "config_common.h"
 
+/* USB Device descriptor parameter */
+#define VENDOR_ID 0xBABA
+#define MANUFACTURER alin elena
+#define PRODUCT m60_split
+
 #define MATRIX_ROWS 10  // Rows are doubled-up
 #define MATRIX_COLS 6
 

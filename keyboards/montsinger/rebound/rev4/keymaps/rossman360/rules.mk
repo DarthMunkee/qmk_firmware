@@ -1,12 +1,4 @@
-MOUSEKEY_ENABLE = yes
+MOUSEKEY_ENABLE = no
 CONSOLE_ENABLE = no
 COMMAND_ENABLE = no
 OLED_ENABLE = no
-CIRQUE_ENABLE = yes
-
-
-ifeq ($(strip $(CIRQUE_ENABLE)), yes)
-   POINTING_DEVICE_ENABLE = yes
-   POINTING_DEVICE_DRIVER = cirque_pinnacle_i2c
-endif
-

@@ -17,6 +17,10 @@
 
 #include "config_common.h"
 
+/* USB Device descriptor parameter */
+#define PRODUCT_ID 0x6161
+#define DEVICE_VER 0x0001
+
 #define LED_NUM_LOCK_PIN B12
 #define LED_SCROLL_LOCK_PIN B13
 #define LED_CAPS_LOCK_PIN C13
@@ -51,3 +55,6 @@
 #define RGBLIGHT_EFFECT_ALTERNATING
 #define RGBLIGHT_EFFECT_TWINKLE
 #endif
+
+// you want to comment this if using stm32-dfu as bootloader
+#define FEE_PAGE_BASE_ADDRESS 0x08008000

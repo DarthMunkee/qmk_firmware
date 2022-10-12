@@ -22,19 +22,11 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
     switch (index) {
         case 0:
             if (clockwise) {
-                tap_code16(KC_PGDN);
+                tap_code(KC_VOLU);
             } else {
-                tap_code(KC_PGUP);
+                tap_code(KC_VOLD);
             }
         break;
-		case 1:
-			if (clockwise) {
-				tap_code16(KC_VOLU);
-			} else {
-				tap_code16(KC_VOLD);
-			}
-		break;
-			
     }
     return true;
 }

@@ -16,6 +16,10 @@
 
 #pragma once
 
+/* USB Device descriptor parameter */
+#define DEVICE_VER      0x0003
+#define PRODUCT         Xelus Valor FRL TKL Rev2.1
+
 /* key matrix size */
 #define MATRIX_ROWS 5
 #define MATRIX_COLS 17

@@ -18,6 +18,8 @@
 
 #include "config_common.h"
 
+#define PRODUCT Onekey Blackpill STM32F401
+
 #define MATRIX_COL_PINS { B0 }
 #define MATRIX_ROW_PINS { A7 }
 

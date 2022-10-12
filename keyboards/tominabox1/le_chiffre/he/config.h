@@ -17,6 +17,10 @@
 
 #include "config_common.h"
 
+/* USB Device descriptor parameter */
+#define DEVICE_VER 0x0003
+
+
 /* COL2ROW, ROW2COL*/
 #undef DIODE_DIRECTION
 #define DIODE_DIRECTION COL2ROW

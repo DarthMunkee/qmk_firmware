@@ -1,13 +1,7 @@
 {
-    "keyboard_name": "Q2",
-    "manufacturer": "Keychron",
+    "keyboard_name": "Keychron Q2",
     "url": "https://github.com/Keychron",
     "maintainer": "lalalademaxiya1",
-    "usb": {
-        "vid": "0x3434",
-        "pid": "0x0110",
-        "device_version": "1.0.0"
-    },
     "layouts": {
         "LAYOUT_ansi_67": {
             "layout": [

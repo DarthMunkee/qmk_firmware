@@ -17,6 +17,9 @@
 
 #include "config_common.h"
 
+#undef PRODUCT_ID
+#define PRODUCT_ID   0x10FF
+
 #define RGBLIGHT_LAYERS
 #define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
 

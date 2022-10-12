@@ -16,6 +16,8 @@
 
 #pragma once
 
+#define PRODUCT_ID      0x0302
+
 // The pin connected to the data pin of the LEDs
 #define RGB_DI_PIN F1
 #define RGBLED_NUM 14
